@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="Word.Application" type="LIBRARY" format="REST" scope="GLOBAL" namedargs="true" generated="2021-04-16T09:51:10Z" specversion="2" source="C:\Program Files\Python39\Lib\site-packages\RPA\Word\Application.py" lineno="20">
+<version />
+<scope>global</scope>
+<namedargs>yes</namedargs>
+<doc>`Word.Application` is a library for controlling a Word application.
+
+**Examples**
+
+**Robot Framework**
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library                 RPA.Word.Application
+    Task Setup              Open Application
+    Suite Teardown          Quit Application
+
+    *** Tasks ***
+    Open existing file
+        Open File           old.docx
+        Write Text          Extra Line Text
+        Write Text          Another Extra Line of Text
+        Save Document AS    ${CURDIR}${/}new.docx
+        ${texts}=           Get all Texts
+        Close Document
+
+**Python**
+
+.. code-block:: python
+
+    from RPA.Word.Application import Application
+
+    app = Application()
+    app.open_application()
+    app.open_file('old.docx')
+    app.write_text('Extra Line Text')
+    app.save_document_as('new.docx')
+    app.quit_application()</doc>
+<kw name="Close Document" lineno="87">
+<arguments>
+<arg>save_changes: bool = False</arg>
+</arguments>
+<doc>Close the active document (if open).</doc>
+</kw>
+<kw name="Create New Document" lineno="114">
+<arguments>
+</arguments>
+<doc>Create new document for Word application</doc>
+</kw>
+<kw name="Export To Pdf" lineno="119">
+<arguments>
+<arg>filename: str</arg>
+</arguments>
+<doc>Export active document into PDF file.
+
+:param filename: PDF to export WORD into</doc>
+</kw>
+<kw name="Get All Texts" lineno="206">
+<arguments>
+</arguments>
+<doc>Get all texts from active document
+
+:return: texts</doc>
+</kw>
+<kw name="Open Application" lineno="70">
+<arguments>
+<arg>visible: bool = False</arg>
+<arg>display_alerts: bool = False</arg>
+</arguments>
+<doc>Open the Word application.
+
+:param visible: show window after opening
+:param display_alerts: show alert popups</doc>
+</kw>
+<kw name="Open File" lineno="99">
+<arguments>
+<arg>filename: str = None</arg>
+</arguments>
+<doc>Open Word document with filename.
+
+:param filename: Word document filepath, defaults to None</doc>
+</kw>
+<kw name="Quit Application" lineno="92">
+<arguments>
+<arg>save_changes: bool = False</arg>
+</arguments>
+<doc>Quit the application.</doc>
+</kw>
+<kw name="Replace Text" lineno="141">
+<arguments>
+<arg>find: str</arg>
+<arg>replace: str</arg>
+</arguments>
+<doc>Replace text in active document
+
+:param find: text to replace
+:param replace: new text</doc>
+</kw>
+<kw name="Save Document" lineno="167">
+<arguments>
+</arguments>
+<doc>Save active document</doc>
+</kw>
+<kw name="Save Document As" lineno="177">
+<arguments>
+<arg>filename: str</arg>
+<arg>fileformat: str = None</arg>
+</arguments>
+<doc>Save document with filename and optionally with given fileformat
+
+:param filename: where to save document
+:param fileformat: see @FILEFORMATS dictionary for possible format,
+    defaults to None</doc>
+</kw>
+<kw name="Set Footer" lineno="158">
+<arguments>
+<arg>text: str</arg>
+</arguments>
+<doc>Set footer for the active document
+
+:param text: footer text to set</doc>
+</kw>
+<kw name="Set Header" lineno="149">
+<arguments>
+<arg>text: str</arg>
+</arguments>
+<doc>Set header for the active document
+
+:param text: header text to set</doc>
+</kw>
+<kw name="Write Text" lineno="129">
+<arguments>
+<arg>text: str</arg>
+<arg>newline: bool = True</arg>
+</arguments>
+<doc>Writes given text at the end of the document
+
+:param text: string to write
+:param newline: write text to newline if True, default to True</doc>
+</kw>
+</keywordspec>

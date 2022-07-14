@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.2 on win32)" generated="20220707 23:51:40.784" rpa="false" schemaversion="3">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\Balaji\.vscode\extensions\robocorp.robotframework-lsp-0.48.2\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Row Count Is Equal To X">
+<arg>select * from Products where product_id=10</arg>
+<arg>1</arg>
+<msg timestamp="20220707 23:51:44.640" level="FAIL">No keyword with name 'Row Count Is Equal To X' found.</msg>
+<status status="FAIL" starttime="20220707 23:51:44.639" endtime="20220707 23:51:44.640"/>
+</kw>
+<kw name="Row Count Is Greater Than X">
+<arg>select * from Products</arg>
+<arg>10</arg>
+<status status="NOT RUN" starttime="20220707 23:51:44.641" endtime="20220707 23:51:44.642"/>
+</kw>
+<kw name="Row Count Is Less Than X">
+<arg>select * from Products</arg>
+<arg>100</arg>
+<status status="NOT RUN" starttime="20220707 23:51:44.643" endtime="20220707 23:51:44.643"/>
+</kw>
+<status status="PASS" starttime="20220707 23:51:40.816" endtime="20220707 23:51:48.452"/>
+</kw>
+<status status="PASS" starttime="20220707 23:51:40.816" endtime="20220707 23:51:48.452"/>
+</test>
+<status status="PASS" starttime="20220707 23:51:40.784" endtime="20220707 23:51:48.454"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

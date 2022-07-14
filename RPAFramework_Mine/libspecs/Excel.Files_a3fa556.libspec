@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="Excel.Files" type="LIBRARY" format="REST" scope="GLOBAL" namedargs="true" generated="2021-04-15T19:17:56Z" specversion="2" source="C:\Program Files\Python39\Lib\site-packages\RPA\Excel\Files.py" lineno="61">
+<version />
+<scope>global</scope>
+<namedargs>yes</namedargs>
+<doc>The `Excel.Files` library can be used to read and write Excel
+files without the need to start the actual Excel application.
+
+It supports both legacy .xls files and modern .xlsx files.
+
+Note: To run macros or load password protected worksheets,
+please use the Excel application library.
+
+**Examples**
+
+**Robot Framework**
+
+A common use-case is to load an existing Excel file as a table,
+which can be iterated over later in a Robot Framework keyword or task:
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library    RPA.Tables
+    Library    RPA.Excel.Files
+
+    *** Keywords ***
+    Read orders as table
+        Open workbook    ${ORDERS_FILE}
+        ${worksheet}=    Read worksheet   header=${TRUE}
+        ${orders}=       Create table     ${worksheet}
+        [Return]         ${orders}
+        [Teardown]       Close workbook
+
+Processing all worksheets in the Excel file and checking row count:
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library    RPA.Excel.Files
+
+    *** Variables ***
+    ${EXCEL_FILE}   /path/to/excel.xlsx
+
+    *** Tasks ***
+    Rows in the sheet
+        [Setup]      Open Workbook    ${EXCEL_FILE}
+        @{sheets}=   List Worksheets
+        FOR  ${sheet}  IN   @{sheets}
+            ${count}=  Get row count in the sheet   ${sheet}
+            Log   Worksheet '${sheet}' has ${count} rows
+        END
+
+    *** Keywords ***
+    Get row count in the sheet
+        [Arguments]      ${SHEET_NAME}
+        ${sheet}=        Read Worksheet   ${SHEET_NAME}
+        ${rows}=         Get Length  ${sheet}
+        [Return]         ${rows}
+
+Creating a new Excel file with a dictionary:
+
+.. code-block:: robotframework
+
+    *** Tasks ***
+    Creating new Excel
+        Create Workbook  my_new_excel.xlsx
+        FOR    ${index}    IN RANGE    20
+            &amp;{row}=       Create Dictionary
+            ...           Row No   ${index}
+            ...           Amount   ${index * 25}
+            Append Rows to Worksheet  ${row}  header=${TRUE}
+        END
+        Save Workbook
+
+Creating a new Excel file with a list:
+
+.. code-block:: robotframework
+
+    *** Variables ***
+    @{heading}   Row No   Amount
+    @{rows}      ${heading}
+
+    *** Tasks ***
+    Creating new Excel
+        Create Workbook  my_new_excel.xlsx
+        FOR    ${index}    IN RANGE   1  20
+            @{row}=         Create List   ${index}   ${index * 25}
+            Append To List  ${rows}  ${row}
+        END
+        Append Rows to Worksheet  ${rows}
+        Save Workbook
+
+**Python**
+
+The library can also be imported directly into Python.
+
+.. code-block:: python
+
+    from RPA.Excel.Files import Files
+
+    def read_excel_worksheet(path, worksheet):
+        lib = Files()
+        lib.open_workbook(path)
+        try:
+            return lib.read_worksheet(worksheet)
+        finally:
+            lib.close_workbook()</doc>
+<kw name="Append Rows To Worksheet" lineno="332">
+<arguments>
+<arg>content</arg>
+<arg>name=None</arg>
+<arg>header=False</arg>
+<arg>start=None</arg>
+</arguments>
+<doc>Append values to the end of the worksheet.
+
+:param content: Rows of values to append
+:param name:    Name of worksheet to append to
+:param header:  Set rows according to existing header row
+:param start:   Start of data, NOTE: Only required when headers is True</doc>
+</kw>
+<kw name="Close Workbook" lineno="233">
+<arguments>
+</arguments>
+<doc>Close the active workbook.</doc>
+</kw>
+<kw name="Create Workbook" lineno="201">
+<arguments>
+<arg>path=None</arg>
+<arg>fmt=xlsx</arg>
+</arguments>
+<doc>Create and open a new Excel workbook.
+
+:param path: Default save path for workbook
+:param fmt:  Format of workbook, i.e. xlsx or xls</doc>
+</kw>
+<kw name="Create Worksheet" lineno="289">
+<arguments>
+<arg>name</arg>
+<arg>content=None</arg>
+<arg>exist_ok=False</arg>
+<arg>header=False</arg>
+</arguments>
+<doc>Create a new worksheet in the current workbook.
+
+:param name:     Name of new worksheet
+:param content:  Optional content for worksheet
+:param exist_ok: If `False`, raise an error if name is already in use
+:param header:   If content is provided, write headers to worksheet</doc>
+</kw>
+<kw name="Find Empty Row" lineno="360">
+<arguments>
+<arg>name=None</arg>
+</arguments>
+<doc>Find the first empty row after existing content.
+
+:param name:    Name of worksheet</doc>
+</kw>
+<kw name="Get Active Worksheet" lineno="276">
+<arguments>
+</arguments>
+<doc>Get the name of the worksheet which is currently active.</doc>
+</kw>
+<kw name="Get Worksheet Value" lineno="368">
+<arguments>
+<arg>row</arg>
+<arg>column</arg>
+<arg>name=None</arg>
+</arguments>
+<doc>Get a cell value in the given worksheet.
+
+:param row:     Index of row to read, e.g. 3
+:param column:  Name or index of column, e.g. C or 7
+:param name:    Name of worksheet (optional)</doc>
+</kw>
+<kw name="Insert Image To Worksheet" lineno="389">
+<arguments>
+<arg>row</arg>
+<arg>column</arg>
+<arg>path</arg>
+<arg>scale=1.0</arg>
+<arg>name=None</arg>
+</arguments>
+<doc>Insert an image into the given cell.
+
+:param row:     Index of row to write
+:param column:  Name or index of column
+:param image:   Path to image file
+:param scale:   Scale of image
+:param name:    Name of worksheet</doc>
+</kw>
+<kw name="List Worksheets" lineno="266">
+<arguments>
+</arguments>
+<doc>List all names of worksheets in the given workbook.</doc>
+</kw>
+<kw name="Open Workbook" lineno="221">
+<arguments>
+<arg>path</arg>
+</arguments>
+<doc>Open an existing Excel workbook.
+
+:param path: path to Excel file</doc>
+</kw>
+<kw name="Read Worksheet" lineno="305">
+<arguments>
+<arg>name=None</arg>
+<arg>header=False</arg>
+<arg>start=None</arg>
+</arguments>
+<doc>Read the content of a worksheet into a list of dictionaries.
+
+Each key in the dictionary will be either values from the header row,
+or Excel-style column letters.
+
+:param name:   Name of worksheet to read
+:param header: If `True`, use the first row of the worksheet
+               as headers for the rest of the rows.</doc>
+</kw>
+<kw name="Read Worksheet As Table" lineno="318">
+<arguments>
+<arg>name=None</arg>
+<arg>header=False</arg>
+<arg>trim=True</arg>
+<arg>start=None</arg>
+</arguments>
+<doc>Read the content of a worksheet into a Table container. Allows
+sorting/filtering/manipulating using the `RPA.Tables` library.
+
+:param name:   Name of worksheet to read
+:param header: If `True`, use the first row of the worksheet
+               as headers for the rest of the rows.
+:param trim:   Remove all empty rows from the end of the worksheet
+:param start:  Row index to start reading data from (1-indexed)</doc>
+</kw>
+<kw name="Remove Worksheet" lineno="343">
+<arguments>
+<arg>name=None</arg>
+</arguments>
+<doc>Remove a worksheet from the active workbook.
+
+:param name: Name of worksheet to remove</doc>
+</kw>
+<kw name="Rename Worksheet" lineno="351">
+<arguments>
+<arg>src_name</arg>
+<arg>dst_name</arg>
+</arguments>
+<doc>Rename an existing worksheet in the active workbook.
+
+:param src_name: Current name of worksheet
+:param dst_name: Future name of worksheet</doc>
+</kw>
+<kw name="Save Workbook" lineno="240">
+<arguments>
+<arg>path=None</arg>
+</arguments>
+<doc>Save the active workbook.
+
+:param path: Path to save to. If not given, uses path given
+             when opened or created.</doc>
+</kw>
+<kw name="Set Active Worksheet" lineno="281">
+<arguments>
+<arg>value</arg>
+</arguments>
+<doc>Set the active worksheet.
+
+:param value: Index or name of worksheet</doc>
+</kw>
+<kw name="Set Worksheet Value" lineno="378">
+<arguments>
+<arg>row</arg>
+<arg>column</arg>
+<arg>value</arg>
+<arg>name=None</arg>
+</arguments>
+<doc>Set a cell value in the given worksheet.
+
+:param row:     Index of row to write, e.g. 3
+:param column:  Name or index of column, e.g. C or 7
+:param value:   New value of cell
+:param name:    Name of worksheet (optional)</doc>
+</kw>
+<kw name="Worksheet Exists" lineno="271">
+<arguments>
+<arg>name</arg>
+</arguments>
+<doc>Return True if worksheet with given name is in workbook.</doc>
+</kw>
+</keywordspec>

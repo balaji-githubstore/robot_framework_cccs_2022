@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="Email.ImapSmtp" type="LIBRARY" format="REST" scope="GLOBAL" namedargs="true" generated="2021-04-16T20:25:31Z" specversion="2" source="C:\Program Files\Python39\Lib\site-packages\RPA\Email\ImapSmtp.py" lineno="92">
+<version />
+<scope>global</scope>
+<namedargs>yes</namedargs>
+<doc>`ImapSmtp` is a library for sending, reading, and deleting emails.
+`ImapSmtp` is interfacing with SMTP and IMAP protocols.
+
+**Troubleshooting**
+
+- Authentication error with Gmail - "Application-specific password required"
+    see. https://support.google.com/mail/answer/185833?hl=en
+
+**Examples**
+
+**Robot Framework**
+
+It is highly recommended to secure your passwords and take care
+that they are not stored in the version control by mistake.
+See ``RPA.Robocloud.Secrets`` how to store RPA Secrets into Robocloud.
+
+When sending HTML content with IMG tags, the ``src`` filenames must match
+the base image name given with the ``images`` parameter.
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library     RPA.Email.ImapSmtp   smtp_server=smtp.gmail.com  smtp_port=587
+    Task Setup  Authorize  account=${GMAIL_ACCOUNT}  password=${GMAIL_PASSWORD}
+
+    *** Variables ***
+    ${GMAIL_ACCOUNT}        ACCOUNT_NAME
+    ${GMAIL_PASSWORD}       ACCOUNT_PASSWORD
+    ${RECIPIENT_ADDRESS}    RECIPIENT
+    ${BODY_IMG1}            ${IMAGEDIR}${/}approved.png
+    ${BODY_IMG2}            ${IMAGEDIR}${/}invoice.png
+    ${EMAIL_BODY}     &lt;h1&gt;Heading&lt;/h1&gt;&lt;p&gt;Status: &lt;img src='approved.png' alt='approved image'/&gt;&lt;/p&gt;
+    ...               &lt;p&gt;INVOICE: &lt;img src='invoice.png' alt='invoice image'/&gt;&lt;/p&gt;
+
+    *** Tasks ***
+    Sending email
+        Send Message  sender=${GMAIL_ACCOUNT}
+        ...           recipients=${RECIPIENT_ADDRESS}
+        ...           subject=Message from RPA Robot
+        ...           body=RPA Robot message body
+
+    Sending HTML Email With Image
+        [Documentation]     Sending email with HTML content and attachment
+        Send Message
+        ...                 sender=${GMAIL_ACCOUNT}
+        ...                 recipients=${RECIPIENT_ADDRESS}
+        ...                 subject=HTML email with body images (2) plus one attachment
+        ...                 body=${EMAIL_BODY}
+        ...                 html=${TRUE}
+        ...                 images=${BODY_IMG1}, ${BODY_IMG2}
+        ...                 attachments=example.png
+
+**Python**
+
+.. code-block:: python
+
+    from RPA.Email.ImapSmtp import ImapSmtp
+
+    gmail_account = "ACCOUNT_NAME"
+    gmail_password = "ACCOUNT_PASSWORD"
+    sender = gmail_account
+
+    mail = ImapSmtp(smtp_server="smtp.gmail.com", smtp_port=587)
+    mail.authorize(account=gmail_account, password=gmail_password)
+    mail.send_message(
+        sender=gmail_account,
+        recipients="RECIPIENT",
+        subject="Message from RPA Python",
+        body="RPA Python message body",
+    )</doc>
+<init lineno="168">
+<arguments>
+<arg>smtp_server: str = None</arg>
+<arg>smtp_port: int = 587</arg>
+<arg>imap_server: str = None</arg>
+<arg>imap_port: int = 993</arg>
+<arg>account: str = None</arg>
+<arg>password: str = None</arg>
+</arguments>
+<doc>Initialize self.  See help(type(self)) for accurate signature.</doc>
+</init>
+<kw name="Add Gmail Labels" lineno="1199">
+<arguments>
+<arg>labels</arg>
+<arg>criterion</arg>
+<arg>source_folder: str = None</arg>
+</arguments>
+<doc>Add GMail labels to messages matching criterion and if given,
+source folder
+
+:param labels: comma separated list of labels to add
+:param criterion: label messages matching criterion
+:param source_folder: look for messages in this folder, default all folders
+:return: status of the operation
+
+Example:
+
+.. code-block:: robotframework
+
+    Add Gmail Labels  customer1   SUBJECT "order confirmation"
+    Add Gmail Labels  wip         SUBJECT "order confirmation"   customerfolder</doc>
+</kw>
+<kw name="Authorize" lineno="324">
+<arguments>
+<arg>account: str = None</arg>
+<arg>password: str = None</arg>
+<arg>smtp_server: str = None</arg>
+<arg>imap_server: str = None</arg>
+<arg>smtp_port: int = None</arg>
+<arg>imap_port: int = None</arg>
+</arguments>
+<doc>Authorize user to SMTP and IMAP servers.
+
+:param account: user account as string, defaults to None
+:param password: user password as string, defaults to None
+:param smtp_server: SMTP server address, defaults to None
+:param imap_server: IMAP server address, defaults to None
+:param smtp_port: SMTP server port, defaults to None (587 for SMTP)
+:param imap_port: IMAP server port, defaults to None
+
+Will use separately set credentials or those given in keyword call.
+
+Example:
+
+.. code-block:: robotframework
+
+    Authorize    ${username}   ${password}  smtp_server=smtp.gmail.com  smtp_port=587</doc>
+</kw>
+<kw name="Authorize Imap" lineno="279">
+<arguments>
+<arg>account: str = None</arg>
+<arg>password: str = None</arg>
+<arg>imap_server: str = None</arg>
+<arg>imap_port: int = None</arg>
+</arguments>
+<doc>Authorize to IMAP server.
+
+:param account: IMAP account name, defaults to None
+:param password: IMAP account password, defaults to None
+:param imap_server: IMAP server address, defaults to None
+:param imap_port: IMAP server port, defaults to None
+
+Can be called without giving any parameters if library
+has been initialized with necessary information and/or
+keyword ``Set Credentials`` has been called.
+
+Example:
+
+.. code-block:: robotframework
+
+    Authorize IMAP    ${username}   ${password}  imap.gmail.com  993</doc>
+</kw>
+<kw name="Authorize Smtp" lineno="226">
+<arguments>
+<arg>account: str = None</arg>
+<arg>password: str = None</arg>
+<arg>smtp_server: str = None</arg>
+<arg>smtp_port: int = None</arg>
+</arguments>
+<doc>Authorize to SMTP server.
+
+:param account: SMTP account name, defaults to None
+:param password: SMTP account password, defaults to None
+:param smtp_server: SMTP server address, defaults to None
+:param smtp_port: SMTP server port, defaults to None (587 for SMTP)
+
+Can be called without giving any parameters if library
+has been initialized with necessary information and/or
+keyword ``Set Credentials`` has been called.
+
+Example:
+
+.. code-block:: robotframework
+
+    Authorize SMTP    ${username}   ${password}  smtp.gmail.com  587</doc>
+</kw>
+<kw name="Create Folder" lineno="999">
+<arguments>
+<arg>folder_name: str = None</arg>
+</arguments>
+<doc>Create email folder
+
+:param folder_name: name for the new folder
+:return: True if operation was successful, False if not
+
+Example:
+
+.. code-block:: robotframework
+
+    Create Folder   filtered</doc>
+</kw>
+<kw name="Delete Folder" lineno="971">
+<arguments>
+<arg>folder_name: str = None</arg>
+</arguments>
+<doc>Delete email folder
+
+:param folder_name: current folder name
+:return: True if operation was successful, False if not
+
+Example:
+
+.. code-block:: robotframework
+
+    Delete Folder   filtered</doc>
+</kw>
+<kw name="Delete Message" lineno="658">
+<arguments>
+<arg>criterion: str = </arg>
+</arguments>
+<doc>Delete single message from server based on criterion.
+
+:param criterion: filter messages based on this, defaults to ""
+:return: True if success, False if not
+
+If criterion does not return exactly 1 message then delete is not done.
+
+Example:
+
+.. code-block:: robotframework
+
+    Delete Message  SUBJECT "Greetings RPA developer"</doc>
+</kw>
+<kw name="Delete Messages" lineno="679">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>limit: int = None</arg>
+</arguments>
+<doc>Delete messages from server based on criterion.
+
+:param criterion: filter messages based on this, defaults to ""
+:param limit: maximum number of message to delete
+:return: True if success, False if not
+
+Example:
+
+.. code-block:: robotframework
+
+    Delete Messages  SUBJECT Greetings</doc>
+</kw>
+<kw name="Do Message Actions" lineno="1241">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>actions: list = None</arg>
+<arg>source_folder: str = None</arg>
+<arg>target_folder: str = None</arg>
+<arg>labels: str = None</arg>
+<arg>limit: int = None</arg>
+<arg>overwrite: bool = False</arg>
+</arguments>
+<doc>Do actions to messages matching criterion and if given,
+source folder
+
+Actions can be:
+
+- msg_copy
+- msg_delete
+- msg_flag
+- msg_unflag
+- msg_read
+- msg_unread
+- msg_save
+- msg_attachment_save
+- glabel_add
+- glabel_remove
+
+Result object contains following attributes:
+
+- actions_done, number of messages on which action was performed
+- message_count, number of messages matching criterion
+- ids, message ids matching criterion
+- uids, dictionary of message uids and message content
+
+:param criterion: perform actions on messages matching this
+:param actions: list of actions to perform on matching messages
+:param source_folder: look for messages in this folder, default all folders
+:param target_folder: can be file path or email folder
+ (for example action: msg_copy)
+:param labels: comma separated list of labels (for example action: glabel_add)
+:param limit:  maximum number of messages (for example action: msg_delete)
+:param overwrite: to control if file should overwrite
+ (for example action: msg_attachment_save)
+:return: result object
+
+Example:
+
+.. code-block:: robotframework
+
+    ${actions}=   Create List  msg_unflag  msg_read  msg_save  msg_attachment_save
+    Do Message Actions    SUBJECT "Order confirmation"
+    ...                   ${actions}
+    ...                   source_folder=XXX
+    ...                   target_folder=${CURDIR}
+    ...                   overwrite=True</doc>
+</kw>
+<kw name="Flag Messages" lineno="1027">
+<arguments>
+<arg>criterion: str = None</arg>
+<arg>unflag: bool = False</arg>
+</arguments>
+<doc>Mark messages as `flagged`
+
+:param criterion: mark messages matching criterion
+:param unflag: to mark messages as not `flagged`
+:return: successful operations (int), matching messages (int)
+
+Example:
+
+.. code-block:: robotframework
+
+    ${flagged}  ${oftotal}    Flag Messages   SUBJECT rpa
+    ${unflagged}  ${oftotal}  Flag Messages   SUBJECT rpa  unflag=True</doc>
+</kw>
+<kw name="Get Folder List" lineno="883">
+<arguments>
+<arg>subdirectory: str = None</arg>
+<arg>pattern: str = None</arg>
+</arguments>
+<doc>Get list of folders on the server
+
+:param subdirectory: list subdirectories for this folder
+:param pattern: list folders matching this pattern
+:return: list of folders
+
+Example:
+
+.. code-block:: robotframework
+
+    @{folders}  Get Folder List
+    @{folders}  Get Folder List  pattern=important
+    @{folders}  Get Folder List  subdirectory=sub</doc>
+</kw>
+<kw name="List Messages" lineno="725">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>source_folder: str = None</arg>
+</arguments>
+<doc>Return list of messages matching criterion.
+
+:param criterion: list emails matching this, defaults to ""
+:return: list of messages or False
+
+Example:
+
+.. code-block:: robotframework
+
+    @{emails}  List Messages  SUBJECT "rpa task"
+    FOR  ${email}  IN  @{EMAILS}
+        Log  ${email}[Subject]
+        Log  ${email}[From]
+        Log  ${email}[Date]
+        Log  ${email}[Delivered-To]
+        Log  ${email}[Received]
+        Log  ${email}[Has-Attachments]
+    END</doc>
+</kw>
+<kw name="Mark As Read" lineno="1062">
+<arguments>
+<arg>criterion: str = None</arg>
+<arg>unread: bool = False</arg>
+</arguments>
+<doc>Mark messages as `read`
+
+:param criterion: mark messages matching criterion
+:param unread: to mark messages as not `read`
+:return: successful operations (int), matching messages (int)
+
+Example:
+
+.. code-block:: robotframework
+
+    ${read}  ${oftotal}  Mark As Read   SUBJECT rpa</doc>
+</kw>
+<kw name="Mark As Unread" lineno="1081">
+<arguments>
+<arg>criterion: str = None</arg>
+</arguments>
+<doc>Mark messages as not `read`
+
+:param criterion: mark messages matching criterion
+:return: successful operations (int), matching messages (int)
+
+Example:
+
+.. code-block:: robotframework
+
+    ${unread}  ${oftotal}  Mark As Unread   SUBJECT rpa</doc>
+</kw>
+<kw name="Move Messages" lineno="1133">
+<arguments>
+<arg>criterion: str = None</arg>
+<arg>target_folder: str = None</arg>
+<arg>source_folder: str = None</arg>
+</arguments>
+<doc>Move messages from source folder to target folder
+
+:param criterion: move messages matching criterion
+:param source_folder: location of the messages, default `INBOX`
+:param target_folder: where messages should be move into
+
+Example:
+
+.. code-block:: robotframework
+
+    ${result}=    Move Messages
+    ...    criterion=SUBJECT "order confirmation 32"
+    ...    target_folder=yyy
+
+    ${result}=    Move Messages
+    ...    criterion=ALL
+    ...    source_folder=yyy
+    ...    target_folder=XXX</doc>
+</kw>
+<kw name="Remove Gmail Labels" lineno="1220">
+<arguments>
+<arg>labels</arg>
+<arg>criterion</arg>
+<arg>source_folder: str = None</arg>
+</arguments>
+<doc>Remove GMail labels to messages matching criterion and if given,
+source folder
+
+:param labels: comma separated list of labels to remove
+:param criterion: unlabel messages matching criterion
+:param source_folder: look for messages in this folder, default all folders
+:return: status of the operation
+
+Example:
+
+.. code-block:: robotframework
+
+    Remove Gmail Labels  wip  SUBJECT "order confirmation"
+    Remove Gmail Labels  wip  SUBJECT "order confirmation"  customerfolder</doc>
+</kw>
+<kw name="Rename Folder" lineno="937">
+<arguments>
+<arg>oldname: str = None</arg>
+<arg>newname: str = None</arg>
+<arg>suppress_error: bool = False</arg>
+</arguments>
+<doc>Rename email folder
+
+:param oldname: current folder name
+:param newname: new name for the folder
+:param suppress_error: to silence warning message, defaults to False
+:return: True if operation was successful, False if not
+
+Example:
+
+.. code-block:: robotframework
+
+    Rename Folder   subfolder   filtered</doc>
+</kw>
+<kw name="Save Attachment" lineno="790">
+<arguments>
+<arg>message</arg>
+<arg>target_folder</arg>
+<arg>overwrite</arg>
+</arguments>
+<doc>Save mail attachment into local folder
+
+:param message: message item
+:param target_folder: local folder for saving attachments to (needs to exist),
+    defaults to user's home directory if None
+:param overwrite: overwrite existing file is True, defaults to False
+
+Example:
+
+.. code-block:: robotframework
+
+    @{emails}  List Messages  SUBJECT "rpa task"
+    FOR  ${email}  IN  @{emails}
+        Run Keyword If   ${email}[Has-Attachments] == True
+        ...              Save Attachment  ${email}  target_folder=${CURDIR}  overwrite=True
+    END</doc>
+</kw>
+<kw name="Save Attachments" lineno="763">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>target_folder: str = None</arg>
+<arg>overwrite: bool = False</arg>
+</arguments>
+<doc>Save mail attachments into local folder.
+
+:param criterion: attachments are saved for mails matching this, defaults to ""
+:param target_folder: local folder for saving attachments to (needs to exist),
+    defaults to user's home directory if None
+:param overwrite: overwrite existing file is True, defaults to False
+:return: list of saved attachments or False
+
+Example:
+
+.. code-block:: robotframework
+
+    ${numsaved}  Save Attachments   SUBJECT "rpa task"
+    ...          target_folder=${CURDIR}${/}messages  overwrite=True</doc>
+</kw>
+<kw name="Save Messages" lineno="699">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>target_folder: str = None</arg>
+</arguments>
+<doc>Save messages based on criteria and store them to target folder
+with attachment files.
+
+Does not save message if `target_folder` is not given.
+
+:param criterion: filter messages based on this, defaults to ""
+:param target_folder: path to folder where message are saved, defaults to None
+:return: True if success, False if not
+
+Example:
+
+.. code-block:: robotframework
+
+    Save Messages  SUBJECT Important message  target_folder=${USERDIR}${/}messages</doc>
+</kw>
+<kw name="Select Folder" lineno="911">
+<arguments>
+<arg>folder_name: str = INBOX</arg>
+</arguments>
+<doc>Select folder by name
+
+:param folder_name: name of the folder to select
+:return: message count in the selected folder
+
+Returns number of messages in the folder or
+exception if folder does not exist on the server.
+
+Example:
+
+.. code-block:: robotframework
+
+    Select Folder   subfolder</doc>
+</kw>
+<kw name="Send Message" lineno="364">
+<arguments>
+<arg>sender: str</arg>
+<arg>recipients: str</arg>
+<arg>subject: str = </arg>
+<arg>body: str = </arg>
+<arg>attachments: str = None</arg>
+<arg>html: bool = False</arg>
+<arg>images: str = None</arg>
+</arguments>
+<doc>Send SMTP email
+
+:param sender: who is sending, ie. 'from'
+:param recipients: who is receiving, ie. 'to'
+:param subject: mail subject field
+:param body: mail body content
+:param attachments: list of filepaths to attach, defaults to []
+:param html: if message content is in HTML, default `False`
+:param images: list of filepaths for inline use, defaults to []
+
+Valid sender values:
+
+- First Lastname &lt;address@domain&gt;
+- address@domain
+
+Example:
+
+.. code-block:: robotframework
+
+    Send Message  sender@domain.com  recipient@domain.com
+    ...           subject=Greetings Software Robot Developer
+    ...           body=${email_body}
+    ...           attachments=${CURDIR}${/}report.pdf</doc>
+</kw>
+<kw name="Send Smtp Hello" lineno="355">
+<arguments>
+</arguments>
+<doc>Send hello message to SMTP server.
+
+Required step when creating SMTP connection.</doc>
+</kw>
+<kw name="Set Credentials" lineno="208">
+<arguments>
+<arg>account: str = None</arg>
+<arg>password: str = None</arg>
+</arguments>
+<doc>Set credentials
+
+:param account: user account as string, defaults to None
+:param password: user password as string, defaults to None
+
+Example:
+
+.. code-block:: robotframework
+
+    Set Credentials   ${username}   ${password}
+    Authorize</doc>
+</kw>
+<kw name="Unflag Messages" lineno="1047">
+<arguments>
+<arg>criterion: str = None</arg>
+</arguments>
+<doc>Mark messages as not `flagged`
+
+:param criterion: mark messages matching criterion
+:return: successful operations (int), matching messages (int)
+
+Example:
+
+.. code-block:: robotframework
+
+    ${unflagged}  ${oftotal}  Unflag Messages   SUBJECT rpa</doc>
+</kw>
+<kw name="Wait For Message" lineno="843">
+<arguments>
+<arg>criterion: str = </arg>
+<arg>timeout: float = 5.0</arg>
+<arg>interval: float = 1.0</arg>
+</arguments>
+<doc>Wait for email matching `criterion` to arrive into mailbox.
+
+:param criterion: message filter to wait for, defaults to ""
+:param timeout: total time in seconds to wait for email, defaults to 5.0
+:param interval: time in seconds for new check, defaults to 1.0
+:return: list of messages or False
+
+Example:
+
+.. code-block:: robotframework
+
+    @{emails}  Wait For Message  SUBJECT "rpa task"  timeout=300  interval=10</doc>
+</kw>
+</keywordspec>

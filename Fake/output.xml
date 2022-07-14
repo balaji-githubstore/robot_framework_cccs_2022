@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.2 on win32)" generated="20220710 16:56:22.814" rpa="false" schemaversion="3">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\Balaji\.vscode\extensions\robocorp.robotframework-lsp-0.48.2\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="FakerLibrary.Word">
+<var>${words}</var>
+<msg timestamp="20220710 16:56:24.685" level="FAIL">No keyword with name 'FakerLibrary.Word' found.</msg>
+<status status="FAIL" starttime="20220710 16:56:24.685" endtime="20220710 16:56:24.686"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>words: ${words}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220710 16:56:24.688" endtime="20220710 16:56:24.688"/>
+</kw>
+<kw name="FakerLibrary.Words">
+<var>${words}</var>
+<arg>nb=${10}</arg>
+<status status="NOT RUN" starttime="20220710 16:56:24.695" endtime="20220710 16:56:24.695"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>words: ${words}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220710 16:56:24.695" endtime="20220710 16:56:24.695"/>
+</kw>
+<kw name="Date Time">
+<var>${words}</var>
+<status status="NOT RUN" starttime="20220710 16:56:24.699" endtime="20220710 16:56:24.699"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>words: ${words}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220710 16:56:24.700" endtime="20220710 16:56:24.700"/>
+</kw>
+<kw name="Credit Card Number">
+<var>${words}</var>
+<status status="NOT RUN" starttime="20220710 16:56:24.704" endtime="20220710 16:56:24.704"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>words: ${words}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220710 16:56:24.704" endtime="20220710 16:56:24.704"/>
+</kw>
+<status status="PASS" starttime="20220710 16:56:22.867" endtime="20220710 16:56:27.394"/>
+</kw>
+<status status="PASS" starttime="20220710 16:56:22.867" endtime="20220710 16:56:27.394"/>
+</test>
+<status status="PASS" starttime="20220710 16:56:22.814" endtime="20220710 16:56:27.396"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

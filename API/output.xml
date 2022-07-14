@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.2 on win32)" generated="20220707 23:14:26.473" rpa="false" schemaversion="3">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\Balaji\.vscode\extensions\robocorp.robotframework-lsp-0.48.2\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Create Session">
+<arg>petshop</arg>
+<arg>https://petstore.swagger.io/v2</arg>
+<msg timestamp="20220707 23:14:29.470" level="FAIL">No keyword with name 'Create Session' found.</msg>
+<status status="FAIL" starttime="20220707 23:14:29.470" endtime="20220707 23:14:29.470"/>
+</kw>
+<kw name="Get Request">
+<var>${response}</var>
+<arg>petshop</arg>
+<arg>pet/10</arg>
+<status status="NOT RUN" starttime="20220707 23:14:29.472" endtime="20220707 23:14:29.473"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.473" endtime="20220707 23:14:29.473"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.473" endtime="20220707 23:14:29.473"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}[id]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.473" endtime="20220707 23:14:29.473"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}[category]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.473" endtime="20220707 23:14:29.473"/>
+</kw>
+<kw name="Status Should Be">
+<arg>200</arg>
+<arg>${response}</arg>
+<status status="NOT RUN" starttime="20220707 23:14:29.475" endtime="20220707 23:14:29.475"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${body}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.475" endtime="20220707 23:14:29.475"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${body}</arg>
+<arg>category</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220707 23:14:29.475" endtime="20220707 23:14:29.475"/>
+</kw>
+<status status="PASS" starttime="20220707 23:14:26.650" endtime="20220707 23:14:32.492"/>
+</kw>
+<status status="PASS" starttime="20220707 23:14:26.650" endtime="20220707 23:14:32.493"/>
+</test>
+<status status="PASS" starttime="20220707 23:14:26.489" endtime="20220707 23:14:32.495"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

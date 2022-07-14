@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="Tables" type="LIBRARY" format="REST" scope="GLOBAL" namedargs="true" generated="2021-04-15T19:38:16Z" specversion="2" source="C:\Program Files\Python39\Lib\site-packages\RPA\Tables.py" lineno="895">
+<version />
+<scope>global</scope>
+<namedargs>yes</namedargs>
+<doc>`Tables` is a library for manipulating tabular data inside Robot Framework.
+
+It can import data from various sources and apply different operations to it.
+Common use-cases are reading and writing CSV files, inspecting files in
+directories, or running tasks using existing Excel data.
+
+**Import types**
+
+The data from which a table can be created can be of two main types:
+
+1. An iterable of individual rows, like a list of lists, or list of dictionaries
+2. A dictionary of columns, where each dictionary value is a list of values
+
+For instance, these two input values:
+
+.. code-block:: python
+
+    data1 = [
+        {"name": "Mark", "age": 58},
+        {"name": "John", "age": 22},
+        {"name": "Adam", "age": 67},
+    ]
+
+    data2 = {
+        "name": ["Mark", "John", "Adam"],
+        "age":  [    58,     22,     67],
+    }
+
+Would both result in the following table:
+
++-------+------+-----+
+| Index | Name | Age |
++=======+======+=====+
+| 1     | Mark | 58  |
++-------+------+-----+
+| 2     | John | 22  |
++-------+------+-----+
+| 3     | Adam | 67  |
++-------+------+-----+
+
+**Examples**
+
+**Robot Framework**
+
+The `Tables` library can load tabular data from various other libraries
+and manipulate it inside Robot Framework.
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library    RPA.Tables
+
+    *** Keywords ***
+    Files to Table
+        ${files}=    List files in directory    ${CURDIR}
+        ${files}=    Create table    ${files}
+        Filter table by column    ${files}    size  &gt;=  ${1024}
+        FOR    ${file}    IN    @{files}
+            Log    ${file}[name]
+        END
+        Write table to CSV    ${files}    ${OUTPUT_DIR}${/}files.csv
+
+**Python**
+
+The library is also available directly through Python, where it
+is easier to handle multiple different tables or do more bespoke
+manipulation operations.
+
+.. code-block:: python
+
+    from RPA.Tables import Tables
+
+    library = Tables()
+    orders = library.read_table_from_csv(
+        "orders.csv", columns=["name", "mail", "product"]
+    )
+
+    customers = library.group_table_by_column(rows, "mail")
+    for customer in customers:
+        for order in customer:
+            add_cart(order)
+        make_order()</doc>
+<kw name="Add Table Column" lineno="1164">
+<arguments>
+<arg>table</arg>
+<arg>name=None</arg>
+<arg>values=None</arg>
+</arguments>
+<doc>Append a column to a table.
+
+:param table:   table to modify
+:param name:    name of new column
+:param values:  row values (or single scalar value for all rows)</doc>
+</kw>
+<kw name="Add Table Row" lineno="1174">
+<arguments>
+<arg>table</arg>
+<arg>row</arg>
+<arg>index=None</arg>
+</arguments>
+<doc>Append rows to a table.
+
+:param table:   table to modify
+:param row:     value for new row
+:param index:   index name for new row</doc>
+</kw>
+<kw name="Clear Table" lineno="1035">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Clear table in-place, but keep columns.
+
+:param table:   table to clear</doc>
+</kw>
+<kw name="Copy Table" lineno="1027">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Copy table object.
+
+:param table:   table to copy</doc>
+</kw>
+<kw name="Create Table" lineno="991">
+<arguments>
+<arg>data=None</arg>
+<arg>trim=False</arg>
+<arg>columns=None</arg>
+<arg>index=None</arg>
+</arguments>
+<doc>Create Table object from data.
+
+Data can be a combination of various iterable containers, e.g.
+list of lists, list of dicts, dict of lists.
+
+:param data:    source data for table
+:param trim:    remove all empty rows from the end of the worksheet,
+                default `False`
+:param columns: names of columns (optional)
+:param index:   names of rows (optional)</doc>
+</kw>
+<kw name="Export Table" lineno="1014">
+<arguments>
+<arg>table</arg>
+<arg>with_index=False</arg>
+<arg>as_list=True</arg>
+</arguments>
+<doc>Convert table object to standard Python containers.
+
+:param table:       table to convert to dict
+:param with_index:  include index in values
+:param as_list:     export data as list instead of dict</doc>
+</kw>
+<kw name="Filter Empty Rows" lineno="1423">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Remove all rows from the table which have only None values.
+
+The filtering will be done in-place.
+
+:param table:   table to filter</doc>
+</kw>
+<kw name="Filter Table By Column" lineno="1361">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+<arg>operator</arg>
+<arg>value</arg>
+</arguments>
+<doc>Remove all rows where the column values don't match the
+given condition.
+
+Supported operators:
+
+============ ========================================
+Operator     Description
+============ ========================================
+&gt;            Cell value is larger than
+&lt;            Cell value is smaller than
+&gt;=           Cell value is larger or equal than
+&lt;=           Cell value is smaller or equal than
+==           Cell value is equal to
+!=           Cell value is not equal to
+contains     Cell value contains given value
+not contains Cell value does not contain given value
+in           Cell value is in given value
+not in       Cell value is not in given value
+============ ========================================
+
+The filtering will be done in-place.
+
+Examples:
+
+.. code-block:: robotframework
+
+    # Only accept prices that are non-zero
+    Filter table by column    ${table}   price  !=  ${0}
+
+    # Remove uwnanted product types
+    @{types}=    Create list    Unknown    Removed
+    Filter table by column    ${table}   product_type  not in  ${types}
+
+:param table:       table to filter
+:param column:      column to filter with
+:param operator:    filtering operator, e.g. &gt;, &lt;, ==, contains
+:param value:       value to compare column to (using operator)</doc>
+</kw>
+<kw name="Find Table Rows" lineno="1265">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+<arg>value</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Find a row in the table by a given column value.
+
+:param table:   Table to find from
+:param column:  name of column to search
+:param value:   value to match for
+:param as_list: return list instead of dictionary</doc>
+</kw>
+<kw name="Get Table Cell" lineno="1319">
+<arguments>
+<arg>table</arg>
+<arg>row</arg>
+<arg>column</arg>
+</arguments>
+<doc>Get a cell value from table.
+
+:param table:   table to read from
+:param row:     row of cell
+:param column:  column of cell</doc>
+</kw>
+<kw name="Get Table Column" lineno="1196">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Get all column values from table.
+
+:param table:   table to read
+:param column:  column to read
+:param as_list: return list instead of dictionary</doc>
+</kw>
+<kw name="Get Table Dimensions" lineno="1129">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Return table dimensions, as (rows, columns).
+
+:param table:    table to inspect</doc>
+</kw>
+<kw name="Get Table Row" lineno="1184">
+<arguments>
+<arg>table</arg>
+<arg>index</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Get a single row from table.
+
+:param table:   table to read
+:param row:     row to read
+:param as_list: return list instead of dictionary</doc>
+</kw>
+<kw name="Get Table Slice" lineno="1255">
+<arguments>
+<arg>table</arg>
+<arg>start=None</arg>
+<arg>end=None</arg>
+</arguments>
+<doc>Return a new Table from a subset of given Table rows.
+
+:param table:   table to read from
+:param start:   start index (inclusive)
+:param start:   end index (inclusive)</doc>
+</kw>
+<kw name="Group Table By Column" lineno="1350">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+</arguments>
+<doc>Group table by `column` and return a list of grouped Tables.
+
+:param table:   table to use for grouping
+:param column:  column which is used as grouping criteria</doc>
+</kw>
+<kw name="Merge Tables" lineno="1043">
+<arguments>
+<arg>*tables</arg>
+<arg>index=None</arg>
+</arguments>
+<doc>Create a union of two tables and their contents.
+
+:param tables: Tables to merge
+:param index:  Column name to use as index for merge
+
+By default rows from all tables are appended one after the other.
+Optionally a column name can be given with ``index``, which is
+used to merge rows together.
+
+Example:
+
+For instance, a ``name`` column could be used to identify
+unique rows and the merge operation should overwrite values
+instead of appending multiple copies of the same name.
+
+====== =====
+Name   Price
+====== =====
+Egg    10.0
+Cheese 15.0
+Ham    20.0
+====== =====
+
+====== =====
+Name   Stock
+====== =====
+Egg    12.0
+Cheese 99.0
+Ham    0.0
+====== =====
+
+.. code-block:: robotframework
+
+    ${products}=    Merge tables    ${prices}    ${stock}    index=Name
+    FOR    ${product}    IN    @{products}
+        Log many
+        ...    Product: ${product}[Name]
+        ...    Price: ${product}[Price]
+        ...    Stock: ${product}[Stock]
+    END</doc>
+</kw>
+<kw name="Pop Table Column" lineno="1241">
+<arguments>
+<arg>table</arg>
+<arg>column=None</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Remove column from table and return it.
+
+:param table:   table to modify
+:param column:  column to remove
+:param as_list: return list instead of dictionary</doc>
+</kw>
+<kw name="Pop Table Row" lineno="1227">
+<arguments>
+<arg>table</arg>
+<arg>index=None</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Remove row from table and return it.
+
+:param table:   table to modify
+:param index:   row index, pops first row if none given
+:param as_list: return list instead of dictionary</doc>
+</kw>
+<kw name="Read Table From Csv" lineno="1464">
+<arguments>
+<arg>path</arg>
+<arg>header=None</arg>
+<arg>columns=None</arg>
+<arg>dialect=None</arg>
+<arg>delimiters=None</arg>
+<arg>column_unknown=Unknown</arg>
+<arg>encoding=None</arg>
+</arguments>
+<doc>Read a CSV file as a table.
+
+:param path:            path to CSV file
+:param header:          CSV file includes header
+:param columns:         names of columns in resulting table
+:param dialect:         format of CSV file
+:param delimiters:      string of possible delimiters
+:param column_unknown:  column name for unknown fields
+:param encoding:        text encoding for input file,
+                        uses system encoding by default
+
+By default attempts to deduce the CSV format and headers
+from a sample of the input file. If it's unable to determine
+the format automatically, the dialect and header will
+have to be defined manually.
+
+Valid ``dialect`` values are ``excel``, ``excel-tab``, and ``unix``,
+and ``header`` is boolean argument (``True``/``False``). Optionally a
+set of valid ``delimiters`` can be given as a string.
+
+The ``columns`` argument can be used to override the names of columns
+in the resulting table. The amount of columns must match the input
+data.
+
+If the source data has a header and rows have more fields than
+the header defines, the remaining values are put into the column
+given by ``column_unknown``. By default it has the value "Unknown".
+
+Examples:
+
+.. code-block:: robotframework
+
+    # Source dialect is deduced automatically
+    ${table}=    Read table from CSV    export.csv
+    Log   Found columns: ${table.columns}
+
+    # Source dialect is known and given explicitly
+    ${table}=    Read table from CSV    export-excel.csv    dialect=excel
+    Log   Found columns: ${table.columns}</doc>
+</kw>
+<kw name="Rename Table Columns" lineno="1138">
+<arguments>
+<arg>table</arg>
+<arg>columns</arg>
+<arg>strict=False</arg>
+</arguments>
+<doc>Renames columns in the Table with given values. Columns with
+name as `None` will be use previous value.
+
+:param table:   table to modify
+:param columns: list of new column names
+:param strict:  if True, raises ValueError if column lengths
+                do not match</doc>
+</kw>
+<kw name="Set Column As Index" lineno="1290">
+<arguments>
+<arg>table</arg>
+<arg>column=None</arg>
+</arguments>
+<doc>Set existing column as index for rows.
+
+:param table:   table to modify
+:param column:  column to convert to index</doc>
+</kw>
+<kw name="Set Row As Column Names" lineno="1281">
+<arguments>
+<arg>table</arg>
+<arg>index</arg>
+</arguments>
+<doc>Set existing row as names for columns.
+
+:param table: table to modify
+:param index: row to use as column names</doc>
+</kw>
+<kw name="Set Table Cell" lineno="1329">
+<arguments>
+<arg>table</arg>
+<arg>row</arg>
+<arg>column</arg>
+<arg>value</arg>
+</arguments>
+<doc>Set a cell value in the table.
+
+:param table:   table to modify to
+:param row:     row of cell
+:param column:  column of cell
+:param value:   value to set</doc>
+</kw>
+<kw name="Set Table Column" lineno="1217">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+<arg>values</arg>
+</arguments>
+<doc>Assign values to entire column in the table.
+
+:param table:   table to modify
+:param column:  column to modify
+:param values:  value(s) to set</doc>
+</kw>
+<kw name="Set Table Row" lineno="1207">
+<arguments>
+<arg>table</arg>
+<arg>row</arg>
+<arg>values</arg>
+</arguments>
+<doc>Assign values to a row in the table.
+
+:param table:   table to modify
+:param row:     row to modify
+:param values:  value(s) to set</doc>
+</kw>
+<kw name="Sort Table By Column" lineno="1340">
+<arguments>
+<arg>table</arg>
+<arg>column</arg>
+<arg>ascending=False</arg>
+</arguments>
+<doc>Sort table in-place according to `column`.
+
+:param table:       table to sort
+:param column:      column to sort with
+:param ascending:   table sort order</doc>
+</kw>
+<kw name="Table Head" lineno="1299">
+<arguments>
+<arg>table</arg>
+<arg>count=5</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Return first `count` rows from table.
+
+:param table:   table to read from
+:param count:   number of lines to read
+:param as_list: return list instead of Table</doc>
+</kw>
+<kw name="Table Tail" lineno="1309">
+<arguments>
+<arg>table</arg>
+<arg>count=5</arg>
+<arg>as_list=False</arg>
+</arguments>
+<doc>Return last `count` rows from table.
+
+:param table:   table to read from
+:param count:   number of lines to read
+:param as_list: return list instead of Table</doc>
+</kw>
+<kw name="Trim Column Names" lineno="1456">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Remove all extraneous whitespace from column names.</doc>
+</kw>
+<kw name="Trim Empty Rows" lineno="1439">
+<arguments>
+<arg>table</arg>
+</arguments>
+<doc>Remove all rows from the end of the table
+which have only None values.
+
+:param table:    table to filter</doc>
+</kw>
+<kw name="Write Table To Csv" lineno="1544">
+<arguments>
+<arg>table</arg>
+<arg>path</arg>
+<arg>header=True</arg>
+<arg>dialect=excel</arg>
+<arg>encoding=None</arg>
+</arguments>
+<doc>Write a table as a CSV file.
+
+:param path:     path to write to
+:param table:    table to write
+:param header:   write columns as header to CSV file
+:param dialect:  the format of output CSV
+:param encoding: text encoding for output file,
+                 uses system encoding by default
+
+Valid ``dialect`` values are ``excel``, ``excel-tab``, and ``unix``.</doc>
+</kw>
+</keywordspec>

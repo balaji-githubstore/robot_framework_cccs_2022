@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="Images" type="LIBRARY" format="REST" scope="GLOBAL" namedargs="true" generated="2021-04-16T20:00:18Z" specversion="2" source="C:\Program Files\Python39\Lib\site-packages\RPA\Images.py" lineno="72">
+<version />
+<scope>global</scope>
+<namedargs>yes</namedargs>
+<doc>`Images` is a library for general image manipulation.
+For image-based desktop automation, use the ``RPA.Desktop`` library.
+
+**Coordinates**
+
+The coordinates used in the library are pairs of x and y values that
+represent pixels. The upper left corner of the image or screen
+is (0, 0). The x-coordinate increases towards the right, and the y-coordinate
+increases towards the bottom.
+
+Regions are represented as tuples of (left, top, right, bottom). For example,
+a 400 by 200-pixel region in the upper left corner would be (0, 0, 400, 200).
+
+**Template matching**
+
+Template matching refers to an operation where the (potential) location of
+a smaller image is searched from a larger image. It can be used for verifying
+certain conditions or locating UI elements for desktop or web automation.
+
+**Requirements**
+
+The default installation depends on `Pillow &lt;https://python-pillow.org/&gt;`_
+library, which is used for general image manipulation operations.
+
+For more robust and faster template matching, the library can use a combination
+of `NumPy &lt;https://numpy.org/&gt;`_ and `OpenCV &lt;https://opencv.org/&gt;`_.
+They can be installed by opting in to the `cv` dependency:
+
+``pip install rpaframework[cv]``
+
+**Examples**
+
+**Robot Framework**
+
+The `Images` library can be imported and used directly in Robot Framework,
+for instance, for capturing screenshots or verifying something on the screen.
+
+Desktop automation based on images should be done using the corresponding
+desktop library, i.e. ``RPA.Desktop``.
+
+.. code-block:: robotframework
+
+    *** Settings ***
+    Library    RPA.Images
+
+    *** Keywords ***
+    Should show success
+        [Documentation]    Raises ImageNotFoundError if success image is not on screen
+        Find template on screen    ${CURDIR}${/}success.png
+
+    Save screenshot to results
+        [Documentation]    Saves screenshot of desktop with unique name
+        ${timestamp}=      Get current date    result_format=%H%M%S
+        Take screenshot    filename=${OUTPUT_DIR}${/}desktop_${timestamp}.png
+
+**Python**
+
+.. code-block:: python
+
+    from RPA.Images import Images
+
+    def draw_matches_on_desktop(template):
+        lib = Images()
+        screenshot = lib.take_screenshot()
+
+        matches = lib.find_template_in_image(screenshot, template)
+        for match in matches:
+            lib.show_region_in_image(screenshot, match)
+
+        screenshot.save("matches.png")</doc>
+<kw name="Crop Image" lineno="180">
+<arguments>
+<arg>image</arg>
+<arg>region</arg>
+<arg>filename=None</arg>
+</arguments>
+<doc>Crop an existing image.
+
+:param image:       Image to crop
+:param region:      Region to crop image to
+:param filename:    Save cropped image to filename</doc>
+</kw>
+<kw name="Find Template In Image" deprecated="true" lineno="198">
+<arguments>
+<arg>image</arg>
+<arg>template</arg>
+<arg>region=None</arg>
+<arg>limit=None</arg>
+<arg>tolerance=None</arg>
+</arguments>
+<doc>*DEPRECATED* Use keyword `Find` from library `RPA.Recognition` instead
+Attempt to find the template from the given image.
+
+:param image:       Path to image or Image instance, used to search from
+:param template:    Path to image or Image instance, used to search with
+:param limit:       Limit returned results to maximum of `limit`.
+:param region:      Area to search from. Can speed up search significantly.
+:param tolerance:   Tolerance for matching, value between 0.1 and 1.0
+:return:            List of matching regions
+:raises ImageNotFoundError: No match was found</doc>
+</kw>
+<kw name="Find Template On Screen" deprecated="true" lineno="246">
+<arguments>
+<arg>template</arg>
+<arg>**kwargs</arg>
+</arguments>
+<doc>*DEPRECATED!!* use `RPA.Desktop.Find Element` instead
+Attempt to find the template image from the current desktop.
+For argument descriptions, see ``find_template_in_image()``</doc>
+</kw>
+<kw name="Get Pixel Color In Image" lineno="293">
+<arguments>
+<arg>image</arg>
+<arg>point</arg>
+</arguments>
+<doc>Get the RGB value of a pixel in the image.
+
+:param image:   image to get pixel from
+:param point:   coordinates for pixel or Point object</doc>
+</kw>
+<kw name="Get Pixel Color On Screen" lineno="303">
+<arguments>
+<arg>point</arg>
+</arguments>
+<doc>Get the RGB value of a pixel currently on screen.
+
+:param point:   coordinates for pixel or Point object</doc>
+</kw>
+<kw name="Show Region In Image" lineno="268">
+<arguments>
+<arg>image</arg>
+<arg>region</arg>
+<arg>color=red</arg>
+<arg>width=5</arg>
+</arguments>
+<doc>Draw a rectangle onto the image around the given region.
+
+:param image:   image to draw onto
+:param region:  coordinates for region or Region object
+:param color:   color of rectangle
+:param width:   line width of rectangle</doc>
+</kw>
+<kw name="Show Region On Screen" lineno="283">
+<arguments>
+<arg>region</arg>
+<arg>color=red</arg>
+<arg>width=5</arg>
+</arguments>
+<doc>Draw a rectangle around the given region on the current desktop.
+
+:param region:  coordinates for region or Region object
+:param color:   color of rectangle
+:param width:   line width of rectangle</doc>
+</kw>
+<kw name="Take Screenshot" deprecated="true" lineno="152">
+<arguments>
+<arg>filename=None</arg>
+<arg>region=None</arg>
+</arguments>
+<doc>*DEPRECATED* Use keyword `RPA.Desktop.Take Screenshot` instead
+Take a screenshot of the current desktop.
+
+:param filename:    Save screenshot to filename
+:param region:      Region to crop screenshot to</doc>
+</kw>
+<kw name="Wait Template On Screen" deprecated="true" lineno="253">
+<arguments>
+<arg>template</arg>
+<arg>timeout=5</arg>
+<arg>**kwargs</arg>
+</arguments>
+<doc>*DEPRECATED!!* use `RPA.Desktop.Wait For Element` instead
+Wait for template image to appear on current desktop.
+For further argument descriptions, see ``find_template_in_image()``
+
+:param timeout: Time to wait for template (in seconds)</doc>
+</kw>
+</keywordspec>

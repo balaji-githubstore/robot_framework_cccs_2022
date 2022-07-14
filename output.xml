@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.2 on win32)" generated="20220714 21:49:10.028" rpa="false" schemaversion="3">
+<suite id="s1" name="Pet Tests New" source="d:\Mine\Company\Harman-RobotFramework\RobotFramework1Harman2021-master\RobotFramework1Harman2021-master\API\pet_tests_new.robot">
+<test id="s1-t1" name="TC1" line="6">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>petshop</arg>
+<arg>https://petstore.swagger.io/v2</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220714 21:49:10.321" level="INFO">Creating Session using : alias=petshop, url=https://petstore.swagger.io/v2, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220714 21:49:10.321" endtime="20220714 21:49:10.322"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias=petshop</arg>
+<arg>url=pet/105</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220714 21:49:11.211" level="INFO">GET Request : url=https://petstore.swagger.io/v2/pet/105 
+ path_url=/v2/pet/105 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220714 21:49:11.211" level="INFO">GET Response : url=https://petstore.swagger.io/v2/pet/105 
+ status=200, reason=OK 
+ headers={'Date': 'Thu, 14 Jul 2022 16:19:11 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT', 'Access-Control-Allow-Headers': 'Content-Type, api_key, Authorization', 'Server': 'Jetty(9.2.9.v20150224)'} 
+ body={"id":105,"category":{"id":0,"name":"string"},"name":"doggie-ba","photoUrls":["string"],"tags":[{"id":0,"name":"string"}],"status":"available"} 
+ </msg>
+<msg timestamp="20220714 21:49:11.211" level="INFO">C:\Program Files\Python310\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'petstore.swagger.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220714 21:49:11.227" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220714 21:49:10.322" endtime="20220714 21:49:11.227"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220714 21:49:11.230" endtime="20220714 21:49:11.232"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220714 21:49:11.232" endtime="20220714 21:49:11.234"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}[id]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220714 21:49:11.234" endtime="20220714 21:49:11.236"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.json()}[category]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220714 21:49:11.236" endtime="20220714 21:49:11.238"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20220714 21:49:11.238" endtime="20220714 21:49:11.239"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${body}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220714 21:49:11.241" level="INFO">${body} = {'id': 105, 'category': {'id': 0, 'name': 'string'}, 'name': 'doggie-ba', 'photoUrls': ['string'], 'tags': [{'id': 0, 'name': 'string'}], 'status': 'available'}</msg>
+<status status="PASS" starttime="20220714 21:49:11.239" endtime="20220714 21:49:11.241"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${body}</arg>
+<arg>category</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220714 21:49:11.241" endtime="20220714 21:49:11.242"/>
+</kw>
+<status status="PASS" starttime="20220714 21:49:10.319" endtime="20220714 21:49:11.242"/>
+</test>
+<status status="PASS" starttime="20220714 21:49:10.031" endtime="20220714 21:49:11.244"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Pet Tests New">Pet Tests New</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
