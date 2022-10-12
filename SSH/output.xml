@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.7 on win32)" generated="20220929 01:06:30.142" rpa="false" schemaversion="3">
+<suite id="s1" name="Demo2" source="D:\Mine\Company\Harman-RobotFramework\RobotFramework1Harman2021-master\RobotFramework1Harman2021-master\SSH\demo2.robot">
+<test id="s1-t1" name="TC1" line="8">
+<kw name="Start Process" library="Process">
+<arg>appium -p 7878</arg>
+<arg>shell=True</arg>
+<arg>alias=appiumserver</arg>
+<arg>stdout=D:\\Mine\\Company\\Harman-RobotFramework\\RobotFramework1Harman2021-master\\RobotFramework1Harman2021-master\\SSH/appium_stdout.txt</arg>
+<arg>stderr=D:\\Mine\\Company\\Harman-RobotFramework\\RobotFramework1Harman2021-master\\RobotFramework1Harman2021-master\\SSH/appium_stderr.txt</arg>
+<doc>Starts a new process on background.</doc>
+<msg timestamp="20220929 01:06:30.534" level="INFO">Starting process:
+appium -p 7878</msg>
+<status status="PASS" starttime="20220929 01:06:30.534" endtime="20220929 01:06:30.549"/>
+</kw>
+<kw name="Open Application" library="AppiumLibrary">
+<arg>remote_url=http://localhost:7878/wd/hub</arg>
+<arg>platformName=windows</arg>
+<arg>app=C:\\WINDOWS\\system32\\notepad.exe</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<msg timestamp="20220929 01:06:37.215" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x0000015E8D4220B0&gt;: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')': /wd/hub/session</msg>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20220929 01:06:51.271" level="FAIL">No application is open</msg>
+<status status="FAIL" starttime="20220929 01:06:51.271" endtime="20220929 01:06:51.271"/>
+</kw>
+<msg timestamp="20220929 01:06:51.271" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No application is open</msg>
+<msg timestamp="20220929 01:06:51.271" level="FAIL">WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: WinAppDriver server is not listening within 10000ms timeout. Make sure it could be started manually
+Stacktrace:
+UnknownError: An unknown server-side error occurred while processing the command. Original error: WinAppDriver server is not listening within 10000ms timeout. Make sure it could be started manually
+    at getResponseForW3CError (C:\Users\Balaji\AppData\Roaming\npm\node_modules\appium\node_modules\appium-base-driver\lib\protocol\errors.js:804:9)
+    at asyncHandler (C:\Users\Balaji\AppData\Roaming\npm\node_modules\appium\node_modules\appium-base-driver\lib\protocol\protocol.js:380:37)</msg>
+<status status="FAIL" starttime="20220929 01:06:30.549" endtime="20220929 01:06:51.287"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>xpath=//*[@Name='File']</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="NOT RUN" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287"/>
+</kw>
+<kw name="Terminate Process" library="Process" type="TEARDOWN">
+<arg>appiumserver kill=True</arg>
+<doc>Stops the process gracefully or forcefully.</doc>
+<msg timestamp="20220929 01:06:51.287" level="FAIL">Non-existing index or alias 'appiumserver kill=True'.</msg>
+<status status="FAIL" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287">Non-existing index or alias 'appiumserver kill=True'.</status>
+</kw>
+<status status="FAIL" starttime="20220929 01:06:30.534" endtime="20220929 01:06:51.287">WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: WinAppDriver server is not listening within 10000ms timeout. Make sure it could be started manually
+Stacktrace:
+UnknownError: An unknown server-side error occurred while processing the command. Original error: WinAppDriver server is not listening within 10000ms timeout. Make sure it could be started manually
+    at getResponseForW3CError (C:\Users\Balaji\AppData\Roaming\npm\node_modules\appium\node_modules\appium-base-driver\lib\protocol\errors.js:804:9)
+    at asyncHandler (C:\Users\Balaji\AppData\Roaming\npm\node_modules\appium\node_modules\appium-base-driver\lib\protocol\protocol.js:380:37)
+
+Also teardown failed:
+Non-existing index or alias 'appiumserver kill=True'.</status>
+</test>
+<test id="s1-t2" name="TC2" line="21">
+<kw name="Start Process" library="Process">
+<var>${process}</var>
+<arg>python</arg>
+<arg>-c</arg>
+<arg>print('Hello, world!')</arg>
+<doc>Starts a new process on background.</doc>
+<msg timestamp="20220929 01:06:51.287" level="INFO">Starting process:
+python -c "print('Hello, world!')"</msg>
+<msg timestamp="20220929 01:06:51.287" level="INFO">${process} = &lt;Popen: returncode: None args: ['python', '-c', "print('Hello, world!')"]&gt;</msg>
+<status status="PASS" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${process}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287"/>
+</kw>
+<kw name="Terminate Process" library="Process" type="TEARDOWN">
+<arg>appiumserver kill=True</arg>
+<doc>Stops the process gracefully or forcefully.</doc>
+<msg timestamp="20220929 01:06:51.287" level="FAIL">Non-existing index or alias 'appiumserver kill=True'.</msg>
+<status status="FAIL" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287">Non-existing index or alias 'appiumserver kill=True'.</status>
+</kw>
+<status status="FAIL" starttime="20220929 01:06:51.287" endtime="20220929 01:06:51.287">Teardown failed:
+Non-existing index or alias 'appiumserver kill=True'.</status>
+</test>
+<test id="s1-t3" name="TC3" line="26">
+<kw name="Open Application" library="AppiumLibrary">
+<arg>remote_url=http://localhost:4723/wd/hub</arg>
+<arg>platformName=windows</arg>
+<arg>deviceName=WindowsPC</arg>
+<arg>app=C:\\Users\\Balaji\\AppData\\Roaming\\Zoom\\bin\\zoom.exe</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20220929 01:06:53.401" level="FAIL">No application is open</msg>
+<status status="FAIL" starttime="20220929 01:06:53.401" endtime="20220929 01:06:53.401"/>
+</kw>
+<msg timestamp="20220929 01:06:53.401" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No application is open</msg>
+<msg timestamp="20220929 01:06:53.401" level="FAIL">WebDriverException: Message: 
+</msg>
+<status status="FAIL" starttime="20220929 01:06:51.303" endtime="20220929 01:06:53.401"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>xpath=//*[@Name='File']</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="NOT RUN" starttime="20220929 01:06:53.401" endtime="20220929 01:06:53.401"/>
+</kw>
+<kw name="Terminate Process" library="Process" type="TEARDOWN">
+<arg>appiumserver kill=True</arg>
+<doc>Stops the process gracefully or forcefully.</doc>
+<msg timestamp="20220929 01:06:53.401" level="FAIL">Non-existing index or alias 'appiumserver kill=True'.</msg>
+<status status="FAIL" starttime="20220929 01:06:53.401" endtime="20220929 01:06:53.401">Non-existing index or alias 'appiumserver kill=True'.</status>
+</kw>
+<status status="FAIL" starttime="20220929 01:06:51.287" endtime="20220929 01:06:53.401">WebDriverException: Message: 
+
+
+Also teardown failed:
+Non-existing index or alias 'appiumserver kill=True'.</status>
+</test>
+<status status="FAIL" starttime="20220929 01:06:30.142" endtime="20220929 01:06:53.417"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="3" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="3" skip="0" id="s1" name="Demo2">Demo2</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220929 01:06:37.215" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x0000015E8D4220B0&gt;: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')': /wd/hub/session</msg>
+<msg timestamp="20220929 01:06:51.271" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No application is open</msg>
+<msg timestamp="20220929 01:06:53.401" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No application is open</msg>
+</errors>
+</robot>

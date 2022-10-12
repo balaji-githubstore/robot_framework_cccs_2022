@@ -36,7 +36,7 @@ Sending Text HTML IMAGE email
     ...    attachments=${attachment1},${attachment2}
 
 ReadMessage
-    Authorize    account=shinebrightanytime@gmail.com     password=balaji@12345    smtp_server=smtp.gmail.com
+    Authorize    account=balaji0017@gmail.com     password=dinakaran    smtp_server=smtp.gmail.com
     ...     imap_server=imap.gmail.com    smtp_port=587    imap_port=993
     @{emails}  List Messages  SUBJECT "Critical security alert"
 

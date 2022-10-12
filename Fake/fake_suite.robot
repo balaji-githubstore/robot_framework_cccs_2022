@@ -1,6 +1,8 @@
 *** Settings ***
 Library     FakerLibrary
 
+Library    webdriver_setup
+
 
 *** Test Cases ***
 FakerLibrary Words Generation

@@ -1,79 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0.1 (Python 3.10.2 on win32)" generated="20220805 02:58:43.482" rpa="false" schemaversion="3">
-<suite id="s1" name="Selenium Grid" source="d:\Mine\Company\Harman-RobotFramework\RobotFramework1Harman2021-master\RobotFramework1Harman2021-master\Selenium_mine\selenium_grid.robot">
-<test id="s1-t1" name="TC3 Hub and Node" line="21">
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>url=https://demo.openemr.io/b/openemr/</arg>
-<arg>browser=chrome</arg>
-<arg>remote_url=http://172.17.67.65:4444</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220805 02:58:43.846" level="INFO">Opening browser 'chrome' to base url 'https://demo.openemr.io/b/openemr/' through remote server at 'http://172.17.67.65:4444'.</msg>
-<status status="PASS" starttime="20220805 02:58:43.846" endtime="20220805 02:58:50.459"/>
+<robot generator="Robot 5.0.1 (Python 3.10.7 on win32)" generated="20221012 22:38:07.315" rpa="false" schemaversion="3">
+<suite id="s1" name="Demo2" source="d:\Mine\Company\Harman-RobotFramework\RobotFramework1Harman2021-master\RobotFramework1Harman2021-master\SSH\demo2.robot">
+<test id="s1-t1" name="TC5" line="50">
+<kw name="Open Application" library="AppiumLibrary">
+<arg>remote_url=http://localhost:4723/wd/hub</arg>
+<arg>platformName=windows</arg>
+<arg>app=C:\\Users\\Balaji\\AppData\\Roaming\\Zoom\\bin\\zoom.exe</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<status status="PASS" starttime="20221012 22:38:07.616" endtime="20221012 22:38:14.047"/>
 </kw>
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>url=https://demo.openemr.io/b/openemr/</arg>
-<arg>browser=chrome</arg>
-<arg>remote_url=http://172.17.67.65:4444</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220805 02:58:50.462" level="INFO">Opening browser 'chrome' to base url 'https://demo.openemr.io/b/openemr/' through remote server at 'http://172.17.67.65:4444'.</msg>
-<status status="PASS" starttime="20220805 02:58:50.460" endtime="20220805 02:58:56.946"/>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20221012 22:38:19.056" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20221012 22:38:14.048" endtime="20221012 22:38:19.058"/>
 </kw>
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>url=https://demo.openemr.io/b/openemr/</arg>
-<arg>browser=chrome</arg>
-<arg>remote_url=http://172.17.67.65:4444</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220805 02:58:56.950" level="INFO">Opening browser 'chrome' to base url 'https://demo.openemr.io/b/openemr/' through remote server at 'http://172.17.67.65:4444'.</msg>
-<status status="PASS" starttime="20220805 02:58:56.949" endtime="20220805 02:59:10.229"/>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>xpath=//*[@Name='Sign In']</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20221012 22:38:19.062" level="INFO">Clicking element 'xpath=//*[@Name='Sign In']'.</msg>
+<status status="PASS" starttime="20221012 22:38:19.059" endtime="20221012 22:38:20.025"/>
 </kw>
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>url=https://demo.openemr.io/b/openemr/</arg>
-<arg>browser=chrome</arg>
-<arg>remote_url=http://172.17.67.65:4444</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220805 02:59:10.231" level="INFO">Opening browser 'chrome' to base url 'https://demo.openemr.io/b/openemr/' through remote server at 'http://172.17.67.65:4444'.</msg>
-<status status="PASS" starttime="20220805 02:59:10.230" endtime="20220805 02:59:39.940"/>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>xpath=//*[contains(@Name,'your email')]</arg>
+<arg>hello@gmail.com</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20221012 22:38:20.027" level="INFO">Typing text 'hello@gmail.com' into text field 'xpath=//*[contains(@Name,'your email')]'</msg>
+<status status="PASS" starttime="20221012 22:38:20.026" endtime="20221012 22:38:22.688"/>
 </kw>
-<kw name="Open Browser" library="SeleniumLibrary">
-<arg>url=https://demo.openemr.io/b/openemr/</arg>
-<arg>browser=chrome</arg>
-<arg>remote_url=http://172.17.67.65:4444</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220805 02:59:39.944" level="INFO">Opening browser 'chrome' to base url 'https://demo.openemr.io/b/openemr/' through remote server at 'http://172.17.67.65:4444'.</msg>
-<status status="PASS" starttime="20220805 02:59:39.943" endtime="20220805 02:59:51.722"/>
+<kw name="Sleep" library="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20221012 22:38:23.699" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20221012 22:38:22.689" endtime="20221012 22:38:23.700"/>
 </kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20220805 02:59:51.725" endtime="20220805 02:59:51.866"/>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>xpath=//*[contains(@Name,'your password')]</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20221012 22:38:23.705" level="INFO">Clicking element 'xpath=//*[contains(@Name,'your password')]'.</msg>
+<status status="PASS" starttime="20221012 22:38:23.703" endtime="20221012 22:38:25.989"/>
 </kw>
-<kw name="Set Browser Implicit Wait" library="SeleniumLibrary">
-<arg>20</arg>
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<status status="PASS" starttime="20220805 02:59:51.893" endtime="20220805 02:59:51.928"/>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>xpath=//*[contains(@Name,'your password')]</arg>
+<arg>hello@gmail.com</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20221012 22:38:25.993" level="INFO">Typing text 'hello@gmail.com' into text field 'xpath=//*[contains(@Name,'your password')]'</msg>
+<status status="PASS" starttime="20221012 22:38:25.990" endtime="20221012 22:38:28.462"/>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>name=authUser</arg>
-<arg>admin</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20220805 02:59:51.942" level="INFO">Typing text 'admin' into text field 'name=authUser'.</msg>
-<status status="PASS" starttime="20220805 02:59:51.940" endtime="20220805 02:59:52.158"/>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>xpath=//*[@Name='Sign In']</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20221012 22:38:28.464" level="INFO">Clicking element 'xpath=//*[@Name='Sign In']'.</msg>
+<status status="PASS" starttime="20221012 22:38:28.462" endtime="20221012 22:38:30.572"/>
 </kw>
-<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
-<doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20220805 02:59:52.160" endtime="20220805 02:59:53.271"/>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20221012 22:38:35.583" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20221012 22:38:30.573" endtime="20221012 22:38:35.584"/>
 </kw>
-<status status="PASS" starttime="20220805 02:58:43.845" endtime="20220805 02:59:53.271"/>
+<kw name="Get Element Attribute" library="AppiumLibrary">
+<var>${text}</var>
+<arg>xpath=xpath=//*[contains(@Name,'Failed')]</arg>
+<arg>Name</arg>
+<doc>Get element attribute using given attribute: name, value,...</doc>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20221012 22:38:37.026" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="appium-screenshot-1.png"&gt;&lt;img src="appium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20221012 22:38:36.912" endtime="20221012 22:38:37.026"/>
+</kw>
+<msg timestamp="20221012 22:38:37.029" level="FAIL">WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Invalid XPath expression: xpath=//*[contains(@Name,'Failed')]
+</msg>
+<status status="FAIL" starttime="20221012 22:38:35.589" endtime="20221012 22:38:37.034"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20221012 22:38:37.036" endtime="20221012 22:38:37.036"/>
+</kw>
+<kw name="Close All Applications" library="AppiumLibrary" type="TEARDOWN">
+<doc>Closes all open applications.</doc>
+<status status="PASS" starttime="20221012 22:38:37.037" endtime="20221012 22:38:37.274"/>
+</kw>
+<status status="FAIL" starttime="20221012 22:38:07.614" endtime="20221012 22:38:37.277">WebDriverException: Message: An unknown server-side error occurred while processing the command. Original error: Invalid XPath expression: xpath=//*[contains(@Name,'Failed')]
+</status>
 </test>
-<status status="PASS" starttime="20220805 02:58:43.484" endtime="20220805 02:59:53.287"/>
+<status status="FAIL" starttime="20221012 22:38:07.323" endtime="20221012 22:38:37.292"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="Selenium Grid">Selenium Grid</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="Demo2">Demo2</stat>
 </suite>
 </statistics>
 <errors>
